@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/carplay"
+    android:keepScreenOn="true"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/relative_shape">
+
+        <TextView
+            android:id="@+id/show_time"
+            fontPath="fonts/SF-Pro-Display-Bold.otf"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            tools:ignore="MissingPrefix" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="70dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="70dp">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/v3_icon_round"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="70dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="70dp">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/applemusic"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="70dp"
+                app:cardCornerRadius="10dp"
+                android:layout_height="70dp">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/phone"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_margin="10dp"
+        android:layout_height="match_parent"
+        android:layout_weight="12" />
+
+</LinearLayout>

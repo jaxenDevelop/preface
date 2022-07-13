@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="12dp"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="4dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/edit_item"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/textview_shape"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/edit_item"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="4dp"
+        android:layout_height="match_parent" />
+
+
+    <TextView
+        android:id="@+id/delete_item"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/textview_shape"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="@string/delete"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
