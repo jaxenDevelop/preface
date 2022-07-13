@@ -21,10 +21,8 @@
         android:id="@+id/edit_item"
         android:layout_width="56dp"
         android:layout_height="match_parent"
-        android:background="@drawable/textview_shape"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="@string/edit_item"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorWhite"
         android:textSize="18sp" />
