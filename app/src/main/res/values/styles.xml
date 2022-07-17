@@ -4,6 +4,11 @@
     <item name="android:windowExitAnimation">@anim/out</item>
 </style>
 
+    <style name="RoutePopAnimation">
+        <item name="android:windowEnterAnimation">@anim/left_enter</item>
+<!--        <item name="android:windowExitAnimation">@anim/left_out</item>-->
+    </style>
+
     <style name="DialogActivityTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item><!--没有标题 -->
         <item name="windowActionBar">false</item><!--没有ActionBar -->

@@ -2,47 +2,41 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginBottom="12dp"
     android:background="@color/white"
     android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:focusable="true">
 
     <TextView
-        android:layout_width="4dp"
-        android:layout_height="match_parent" />
+        android:id="@+id/name"
+        fontPath="fonts/SF-Pro-Display-Bold.otf"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        tools:ignore="MissingPrefix" />
 
     <TextView
-        android:id="@+id/edit_item"
-        android:layout_width="56dp"
-        android:layout_height="match_parent"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp" />
+        android:id="@+id/address"
+        fontPath="fonts/SF-Pro-Display-Bold.otf"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="8dp"
+        android:textColor="#757575"
+        android:layout_alignStart="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="20sp"
+        tools:ignore="MissingPrefix" />
 
     <TextView
-        android:layout_width="4dp"
-        android:layout_height="match_parent" />
-
-
-    <TextView
-        android:id="@+id/delete_item"
-        android:layout_width="56dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/textview_shape"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:text="@string/delete"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp" />
-
+        android:layout_below="@+id/address"
+        android:layout_marginTop="10dp"
+        android:background="#9e9e9e"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
 </RelativeLayout>

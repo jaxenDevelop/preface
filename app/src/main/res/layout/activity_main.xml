@@ -34,13 +34,13 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_gravity="center_horizontal"
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="70dp">
+                android:layout_height="110dp">
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:background="@drawable/v3_icon_round"/>
 
             </androidx.cardview.widget.CardView>
@@ -48,13 +48,13 @@
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="70dp">
+                android:layout_height="110dp">
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:background="@drawable/applemusic"/>
 
             </androidx.cardview.widget.CardView>
@@ -63,13 +63,13 @@
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 app:cardCornerRadius="10dp"
-                android:layout_height="70dp">
+                android:layout_height="110dp">
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:background="@drawable/phone"/>
 
             </androidx.cardview.widget.CardView>
