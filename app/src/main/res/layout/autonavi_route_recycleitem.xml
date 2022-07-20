@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.percentlayout.widget.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:id="@+id/label"
         fontPath="fonts/SF-Pro-Display-Bold.otf"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginStart="24dp"
         android:textColor="@color/black"
@@ -22,20 +22,21 @@
     <TextView
         android:id="@+id/time"
         fontPath="fonts/SF-Pro-Display-Bold.otf"
-        android:layout_width="180dp"
-        android:layout_height="35dp"
+        android:layout_width="0dp"
+        app:layout_widthPercent="40%"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/label"
         android:layout_alignStart="@+id/label"
         android:layout_marginTop="8dp"
         android:gravity="left|center_vertical"
         android:textColor="@color/black"
-        android:textSize="26sp"
+        android:textSize="25sp"
         tools:ignore="MissingPrefix" />
 
     <TextView
         android:id="@+id/divider_point"
-        android:layout_width="20dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         fontPath="fonts/SF-Pro-Display-Bold.otf"
         android:layout_alignTop="@+id/time"
         android:layout_alignBottom="@+id/time"
@@ -43,20 +44,21 @@
         android:gravity="center"
         android:text="•"
         android:textColor="@color/black"
-        android:textSize="26sp"
+        android:textSize="25sp"
         tools:ignore="MissingPrefix" />
 
     <TextView
         android:id="@+id/distance"
         fontPath="fonts/SF-Pro-Display-Bold.otf"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_width="0dp"
+        app:layout_widthPercent="40%"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/time"
         android:layout_alignBottom="@+id/time"
         android:layout_toEndOf="@+id/divider_point"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="26sp"
+        android:textSize="25sp"
         tools:ignore="MissingPrefix" />
 
     <LinearLayout
@@ -71,8 +73,8 @@
 
         <ImageView
             android:id="@+id/img_money"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/money" />
 
         <TextView
@@ -80,16 +82,16 @@
             fontPath="fonts/SF-Pro-Display-Bold.otf"
             android:layout_marginStart="8dp"
             android:layout_width="40dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="24sp"
             tools:ignore="MissingPrefix" />
 
         <ImageView
             android:id="@+id/light"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="8dp"
             android:src="@drawable/light" />
 
@@ -98,10 +100,10 @@
             fontPath="fonts/SF-Pro-Display-Bold.otf"
             android:layout_marginStart="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="24sp"
             tools:ignore="MissingPrefix" />
 
     </LinearLayout>
@@ -116,4 +118,4 @@
         android:layout_marginBottom="8dp"
         android:background="#8a8a8a" />
 
-</RelativeLayout>
+</androidx.percentlayout.widget.PercentRelativeLayout>

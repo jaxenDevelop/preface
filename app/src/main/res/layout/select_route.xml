@@ -15,7 +15,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/back" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="路线选择"
             android:textColor="@color/white"
-            android:textSize="26sp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
 
@@ -59,11 +59,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/scrollView"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#3069F6"
         android:text="开始导航"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
     <View
         android:layout_below="@+id/confirm"

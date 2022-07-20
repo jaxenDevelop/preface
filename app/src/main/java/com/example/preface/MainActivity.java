@@ -6,6 +6,7 @@ import static com.amap.api.services.core.ServiceSettings.updatePrivacyShow;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.example.preface.autonavi.AutoNaviFragment;
+import com.example.preface.autonavi.TestLocationFragment;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,11 +49,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView showTime;
     private Handler handler;
     private ViewPager viewPager;
+    private CardView navi_card, applemusic_card, telephone_card;
+    private int CardViewWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         String perms[] = {Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -73,6 +78,21 @@ public class MainActivity extends AppCompatActivity {
                 .build());
 
         showTime = findViewById(R.id.show_time);
+        navi_card = findViewById(R.id.navi_card);
+//        navi_card.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (navi_card.getWidth() != 0)
+//                    CardViewWidth = navi_card.getWidth();
+//
+//                initCardHeight();
+//            }
+//        });
+        applemusic_card = findViewById(R.id.applemusic_card);
+        telephone_card = findViewById(R.id.telephone_card);
+
+
+
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
@@ -91,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         /**初始化FragmentList**/
         List<Fragment> list = new ArrayList<>();
         list.add(new AutoNaviFragment());
-//        list.add(new TurntableFragment());
+//        list.add(new TestLocationFragment());
 //        list.add(new AboutFragment());
 
         myFragAdapter myFragAdapter = new myFragAdapter(getSupportFragmentManager(), list);
@@ -111,6 +131,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void initCardHeight() {
+        ViewGroup.LayoutParams layoutParams0 = navi_card.getLayoutParams();
+        layoutParams0.height = navi_card.getWidth();
+        navi_card.setLayoutParams(layoutParams0);
+
+        ViewGroup.LayoutParams layoutParams1 = applemusic_card.getLayoutParams();
+        layoutParams1.height = applemusic_card.getWidth();
+        applemusic_card.setLayoutParams(layoutParams1);
+
+        ViewGroup.LayoutParams layoutParams2 = telephone_card.getLayoutParams();
+        layoutParams2.height = telephone_card.getWidth();
+        telephone_card.setLayoutParams(layoutParams2);
+
     }
 
     private void initTime() {
@@ -165,5 +201,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setTransparent();
+
+        initCardHeight();
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,16 +19,19 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -79,6 +83,8 @@ import com.example.preface.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class AutoNaviFragment extends Fragment implements View.OnClickListener, AMapNaviViewListener, AMapNaviListener {
     private MapView auto_map;
@@ -96,10 +102,11 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
     private List<CalRouteResult> routeList;
     private PopupWindow searchPop, selectRoutePop;
     private Handler handler;
+    private SharedPreferences sp;
     //注册广播
     private ClickSearchResult clickBroadCaster;
     private AMapNaviView aMapNaviView;
-    public static final  String AUTONAVIACTION = "ClickPosition";
+    public static final String AUTONAVIACTION = "ClickPosition";
     /**
      * 保存当前算好的路线
      */
@@ -137,6 +144,11 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
         ClickMapTime = 0;
         searchList = new ArrayList<>();
         routeList = new ArrayList<>();
+
+
+        sp = getActivity().getSharedPreferences("SearchHistory", Context.MODE_PRIVATE);
+        initSearchList();
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         auto_map = view.findViewById(R.id.auto_map);
@@ -151,7 +163,7 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
             aMapNavi = AMapNavi.getInstance(getActivity());
             //添加监听回调，用于处理算路成功
             aMapNavi.addAMapNaviListener(this);
-            aMapNavi.setUseInnerVoice(true,false);
+            aMapNavi.setUseInnerVoice(true, false);
 //            aMapNavi.addParallelRoadListener(this);
         } catch (AMapException e) {
             e.printStackTrace();
@@ -191,6 +203,29 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
             }
         };
         return view;
+    }
+
+    private void initSearchList() {
+        Map<String, ?> map = sp.getAll();
+        if (map.size() > 0){
+            int Max = 0;
+
+            for (Map.Entry<String, ?> entry : map.entrySet()) {
+                if (Integer.parseInt(entry.getKey()) >= Max)
+                    Max = Integer.parseInt(entry.getKey());
+            }
+            int Min = Max;
+            for (Map.Entry<String, ?> entry : map.entrySet()) {
+                if (Integer.parseInt(entry.getKey()) <= Min)
+                    Min = Integer.parseInt(entry.getKey());
+            }
+
+            for (int i = Max; i >= Min; i--) {
+                Tip parcel = new Tip();
+                parcel.setName(sp.getString(i + "", "null"));
+                searchList.add(parcel);
+            }
+        }
     }
 
     private void initBroadCaster() {
@@ -249,18 +284,64 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
             }
         });
 
+        final int[] index = {0};
+        //点击键盘搜索
+        search_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH && textView.getText().toString().length() > 0) {
+                    //第二个参数传入null或者“”代表在全国进行检索，否则按照传入的city进行检索
+                    InputtipsQuery inputquery = new InputtipsQuery(textView.getText().toString(), "");
+                    inputquery.setCityLimit(true);//限制在当前城市
+
+                    Inputtips inputTips = new Inputtips(getActivity(), inputquery);
+                    inputTips.setInputtipsListener(new Inputtips.InputtipsListener() {
+                        @Override
+                        public void onGetInputtips(List<Tip> list, int i) {
+                            searchList.clear();
+                            for (int j = 0; j < list.size(); j++) {
+                                searchList.add(list.get(j));
+                            }
+
+                            Message message = Message.obtain();
+                            message.what = 0;
+                            handler.sendMessage(message);
+                        }
+                    });
+                    inputTips.requestInputtipsAsyn();
+
+
+                    SharedPreferences.Editor editor = sp.edit();
+                    Map<String, ?> key_Value = sp.getAll();
+                    int MAX = 0;
+                    for (Map.Entry<String, ?> entry : key_Value.entrySet()) {
+                        if (Integer.parseInt(entry.getKey()) >= MAX)
+                            MAX = Integer.parseInt(entry.getKey());
+                    }
+
+                    int count = key_Value.size();
+                    editor.putString((MAX + 1) + "", textView.getText().toString());
+
+                    if (count > 10)
+                        editor.remove((count - 11) + "");
+                    editor.apply();
+
+                }
+                return false;
+            }
+        });
         searchPop = new PopupWindow(inflate, getWindowWidth() / 3, getWindowHeight() * 4 / 5);
         searchPop.setOutsideTouchable(true);
         searchPop.setAnimationStyle(R.style.popAnimation);
     }
 
-    private int getWindowHeight(){
+    private int getWindowHeight() {
         DisplayMetrics dm = new DisplayMetrics();
-       getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-       return dm.heightPixels;
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm.heightPixels;
     }
 
-    private int getWindowWidth(){
+    private int getWindowWidth() {
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         return dm.widthPixels;
@@ -376,7 +457,7 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
                     return;
                 }
                 Bundle bundle = location.getExtras();
-                System.out.println("打印坐标：准备进入bundle："  + " ");
+                System.out.println("打印坐标：准备进入bundle：" + " ");
                 if (bundle != null && (bundle.getInt("errorCode", -1)) == 0) {//定位成功
                     //获取定位数据
                     //经度
@@ -384,7 +465,7 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
                     //纬度
                     lng = location.getLongitude();
 
-                    System.out.println("打印坐标："+lat);
+                    System.out.println("打印坐标：" + lat);
 //                    //实现第一次定位成功,将地图中心移动到定位点
 //                    if (isFirstLocation){
 //                        isFirstLocation = false;
@@ -531,7 +612,6 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onInitNaviSuccess() {
         System.out.println("初始化成功");
-
 
 
     }
@@ -731,7 +811,7 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getIntExtra("flag", 0)){
+            switch (intent.getIntExtra("flag", 0)) {
                 case 0:
                     endlat = intent.getDoubleExtra("lat", 0);
                     endlng = intent.getDoubleExtra("lng", 0);
@@ -766,14 +846,14 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
 //                carInfo.setCarNumber(carNumber);
                         //设置车牌是否参与限行算路
 //                carInfo.setRestriction(true);
-                        if (aMapNavi!=null){
+                        if (aMapNavi != null) {
                             aMapNavi.calculateDriveRoute(startList, endList, null, strategy);
                         }
                     }
                     break;
 
                 case 1:
-                    int routeId = intent.getIntExtra("routeId",0);
+                    int routeId = intent.getIntExtra("routeId", 0);
                     changeRoute(routeId);
                     break;
             }
@@ -796,10 +876,10 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
         routeOverLay.setTrafficLine(false);
         routeOverLay.addToMap();
         routeOverlays.put(routeId, routeOverLay);
-        System.out.println("存入ID："+routeId);
+        System.out.println("存入ID：" + routeId);
         routeList.add(new CalRouteResult(routeId, path.getAllLength(), path.getAllTime(), path.getLightList().size(), path.getLabels(), path.getTollCost()));
         routeRecycleAdapter.notifyDataSetChanged();
-        selectRoutePop.showAsDropDown(naviBar, 0, 10, Gravity.LEFT);
+        selectRoutePop.showAsDropDown(naviBar, 0, -100, Gravity.LEFT);
 
     }
 
@@ -830,7 +910,7 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
             routeOverlays.get(key).setTransparency(0.4f);
         }
         RouteOverLay routeOverlay = routeOverlays.get(routeId);
-        if(routeOverlay != null){
+        if (routeOverlay != null) {
             routeOverlay.setTransparency(1);
             /**把用户选择的那条路的权值弄高，使路线高亮显示的同时，重合路段不会变的透明**/
             routeOverlay.setZindex(zindex++);
@@ -841,10 +921,12 @@ public class AutoNaviFragment extends Fragment implements View.OnClickListener, 
 
         /**选完路径后判断路线是否是限行路线**/
         AMapRestrictionInfo info = aMapNavi.getNaviPath().getRestrictionInfo();
-        System.out.println("是否为空："+info);
-        if (info != null){if (!TextUtils.isEmpty(info.getRestrictionTitle())) {
-            Toast.makeText(getActivity(), info.getRestrictionTitle(), Toast.LENGTH_SHORT).show();
-        }}
+        System.out.println("是否为空：" + info);
+        if (info != null) {
+            if (!TextUtils.isEmpty(info.getRestrictionTitle())) {
+                Toast.makeText(getActivity(), info.getRestrictionTitle(), Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 

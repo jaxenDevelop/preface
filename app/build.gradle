@@ -38,6 +38,7 @@ dependencies {
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
     implementation 'com.amap.api:navi-3dmap:latest.integration'
+    implementation 'androidx.percentlayout:percentlayout:1.0.0'
 //    implementation 'com.amap.api:location:latest.integration'
 //    implementation 'com.amap.api:3dmap:latest.integration'
 }

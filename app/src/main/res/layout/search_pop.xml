@@ -6,21 +6,21 @@
 
     <EditText
         android:id="@+id/search_edit"
-        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textSize="26sp"
-        android:hint="搜索目的地"
-        android:gravity="center"
-        android:textColorHint="#616161"
         android:background="@drawable/search_edit_shape"
-        android:inputType="text"
         android:clickable="true"
         android:focusable="true"
+        android:gravity="center"
+        android:hint="搜索目的地"
         android:imeOptions="actionSearch"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"/>
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="#616161"
+        android:textSize="26sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:id="@+id/poi_recycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="#EDF0F6"
                 android:scrollbars="none" />
 
         </RelativeLayout>
